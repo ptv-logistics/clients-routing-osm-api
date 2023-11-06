@@ -26,25 +26,31 @@ using OpenAPIDateConverter = PTV.Developer.Clients.routing_osm.Client.OpenAPIDat
 namespace PTV.Developer.Clients.routing_osm.Model
 {
     /// <summary>
-    /// Options
+    /// ReachableAreasId
     /// </summary>
-    [DataContract(Name = "Options")]
-    public partial class Options : IEquatable<Options>, IValidatableObject
+    [DataContract(Name = "ReachableAreasId")]
+    public partial class ReachableAreasId : IEquatable<ReachableAreasId>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReachableAreasId" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected ReachableAreasId() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReachableAreasId" /> class.
+        /// </summary>
+        /// <param name="id">The ID of the calculated reachable areas. (required).</param>
+        public ReachableAreasId(Guid id = default(Guid))
+        {
+            this.Id = id;
+        }
 
         /// <summary>
-        /// Gets or Sets PolylineFormat
+        /// The ID of the calculated reachable areas.
         /// </summary>
-        [DataMember(Name = "polylineFormat", EmitDefaultValue = false)]
-        public PolylineFormat? PolylineFormat { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Options" /> class.
-        /// </summary>
-        /// <param name="polylineFormat">polylineFormat.</param>
-        public Options(PolylineFormat? polylineFormat = default(PolylineFormat?))
-        {
-            this.PolylineFormat = polylineFormat;
-        }
+        /// <value>The ID of the calculated reachable areas.</value>
+        [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = true)]
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,8 +59,8 @@ namespace PTV.Developer.Clients.routing_osm.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class Options {\n");
-            sb.Append("  PolylineFormat: ").Append(PolylineFormat).Append("\n");
+            sb.Append("class ReachableAreasId {\n");
+            sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +81,15 @@ namespace PTV.Developer.Clients.routing_osm.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Options);
+            return this.Equals(input as ReachableAreasId);
         }
 
         /// <summary>
-        /// Returns true if Options instances are equal
+        /// Returns true if ReachableAreasId instances are equal
         /// </summary>
-        /// <param name="input">Instance of Options to be compared</param>
+        /// <param name="input">Instance of ReachableAreasId to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Options input)
+        public bool Equals(ReachableAreasId input)
         {
             if (input == null)
             {
@@ -91,8 +97,9 @@ namespace PTV.Developer.Clients.routing_osm.Model
             }
             return 
                 (
-                    this.PolylineFormat == input.PolylineFormat ||
-                    this.PolylineFormat.Equals(input.PolylineFormat)
+                    this.Id == input.Id ||
+                    (this.Id != null &&
+                    this.Id.Equals(input.Id))
                 );
         }
 
@@ -105,7 +112,10 @@ namespace PTV.Developer.Clients.routing_osm.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = (hashCode * 59) + this.PolylineFormat.GetHashCode();
+                if (this.Id != null)
+                {
+                    hashCode = (hashCode * 59) + this.Id.GetHashCode();
+                }
                 return hashCode;
             }
         }

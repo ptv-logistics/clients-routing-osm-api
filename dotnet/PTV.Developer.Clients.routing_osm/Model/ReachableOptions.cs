@@ -26,24 +26,24 @@ using OpenAPIDateConverter = PTV.Developer.Clients.routing_osm.Client.OpenAPIDat
 namespace PTV.Developer.Clients.routing_osm.Model
 {
     /// <summary>
-    /// Options
+    /// ReachableOptions
     /// </summary>
-    [DataContract(Name = "Options")]
-    public partial class Options : IEquatable<Options>, IValidatableObject
+    [DataContract(Name = "ReachableOptions")]
+    public partial class ReachableOptions : IEquatable<ReachableOptions>, IValidatableObject
     {
 
         /// <summary>
-        /// Gets or Sets PolylineFormat
+        /// Gets or Sets DrivingDirection
         /// </summary>
-        [DataMember(Name = "polylineFormat", EmitDefaultValue = false)]
-        public PolylineFormat? PolylineFormat { get; set; }
+        [DataMember(Name = "drivingDirection", EmitDefaultValue = false)]
+        public DrivingDirection? DrivingDirection { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Options" /> class.
+        /// Initializes a new instance of the <see cref="ReachableOptions" /> class.
         /// </summary>
-        /// <param name="polylineFormat">polylineFormat.</param>
-        public Options(PolylineFormat? polylineFormat = default(PolylineFormat?))
+        /// <param name="drivingDirection">drivingDirection.</param>
+        public ReachableOptions(DrivingDirection? drivingDirection = default(DrivingDirection?))
         {
-            this.PolylineFormat = polylineFormat;
+            this.DrivingDirection = drivingDirection;
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace PTV.Developer.Clients.routing_osm.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class Options {\n");
-            sb.Append("  PolylineFormat: ").Append(PolylineFormat).Append("\n");
+            sb.Append("class ReachableOptions {\n");
+            sb.Append("  DrivingDirection: ").Append(DrivingDirection).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +75,15 @@ namespace PTV.Developer.Clients.routing_osm.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Options);
+            return this.Equals(input as ReachableOptions);
         }
 
         /// <summary>
-        /// Returns true if Options instances are equal
+        /// Returns true if ReachableOptions instances are equal
         /// </summary>
-        /// <param name="input">Instance of Options to be compared</param>
+        /// <param name="input">Instance of ReachableOptions to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Options input)
+        public bool Equals(ReachableOptions input)
         {
             if (input == null)
             {
@@ -91,8 +91,8 @@ namespace PTV.Developer.Clients.routing_osm.Model
             }
             return 
                 (
-                    this.PolylineFormat == input.PolylineFormat ||
-                    this.PolylineFormat.Equals(input.PolylineFormat)
+                    this.DrivingDirection == input.DrivingDirection ||
+                    this.DrivingDirection.Equals(input.DrivingDirection)
                 );
         }
 
@@ -105,7 +105,7 @@ namespace PTV.Developer.Clients.routing_osm.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = (hashCode * 59) + this.PolylineFormat.GetHashCode();
+                hashCode = (hashCode * 59) + this.DrivingDirection.GetHashCode();
                 return hashCode;
             }
         }

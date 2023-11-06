@@ -26,25 +26,41 @@ using OpenAPIDateConverter = PTV.Developer.Clients.routing_osm.Client.OpenAPIDat
 namespace PTV.Developer.Clients.routing_osm.Model
 {
     /// <summary>
-    /// Options
+    /// ReachableAreasResponse
     /// </summary>
-    [DataContract(Name = "Options")]
-    public partial class Options : IEquatable<Options>, IValidatableObject
+    [DataContract(Name = "ReachableAreasResponse")]
+    public partial class ReachableAreasResponse : IEquatable<ReachableAreasResponse>, IValidatableObject
     {
 
         /// <summary>
-        /// Gets or Sets PolylineFormat
+        /// Gets or Sets Status
         /// </summary>
-        [DataMember(Name = "polylineFormat", EmitDefaultValue = false)]
-        public PolylineFormat? PolylineFormat { get; set; }
+        [DataMember(Name = "status", EmitDefaultValue = false)]
+        public CalculationStatus? Status { get; set; }
         /// <summary>
-        /// Initializes a new instance of the <see cref="Options" /> class.
+        /// Initializes a new instance of the <see cref="ReachableAreasResponse" /> class.
         /// </summary>
-        /// <param name="polylineFormat">polylineFormat.</param>
-        public Options(PolylineFormat? polylineFormat = default(PolylineFormat?))
+        /// <param name="status">status.</param>
+        /// <param name="reachableAreas">reachableAreas.</param>
+        /// <param name="error">error.</param>
+        public ReachableAreasResponse(CalculationStatus? status = default(CalculationStatus?), ReachableAreas reachableAreas = default(ReachableAreas), ErrorResponse error = default(ErrorResponse))
         {
-            this.PolylineFormat = polylineFormat;
+            this.Status = status;
+            this.ReachableAreas = reachableAreas;
+            this.Error = error;
         }
+
+        /// <summary>
+        /// Gets or Sets ReachableAreas
+        /// </summary>
+        [DataMember(Name = "reachableAreas", EmitDefaultValue = false)]
+        public ReachableAreas ReachableAreas { get; set; }
+
+        /// <summary>
+        /// Gets or Sets Error
+        /// </summary>
+        [DataMember(Name = "error", EmitDefaultValue = false)]
+        public ErrorResponse Error { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,8 +69,10 @@ namespace PTV.Developer.Clients.routing_osm.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class Options {\n");
-            sb.Append("  PolylineFormat: ").Append(PolylineFormat).Append("\n");
+            sb.Append("class ReachableAreasResponse {\n");
+            sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("  ReachableAreas: ").Append(ReachableAreas).Append("\n");
+            sb.Append("  Error: ").Append(Error).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +93,15 @@ namespace PTV.Developer.Clients.routing_osm.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Options);
+            return this.Equals(input as ReachableAreasResponse);
         }
 
         /// <summary>
-        /// Returns true if Options instances are equal
+        /// Returns true if ReachableAreasResponse instances are equal
         /// </summary>
-        /// <param name="input">Instance of Options to be compared</param>
+        /// <param name="input">Instance of ReachableAreasResponse to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Options input)
+        public bool Equals(ReachableAreasResponse input)
         {
             if (input == null)
             {
@@ -91,8 +109,18 @@ namespace PTV.Developer.Clients.routing_osm.Model
             }
             return 
                 (
-                    this.PolylineFormat == input.PolylineFormat ||
-                    this.PolylineFormat.Equals(input.PolylineFormat)
+                    this.Status == input.Status ||
+                    this.Status.Equals(input.Status)
+                ) && 
+                (
+                    this.ReachableAreas == input.ReachableAreas ||
+                    (this.ReachableAreas != null &&
+                    this.ReachableAreas.Equals(input.ReachableAreas))
+                ) && 
+                (
+                    this.Error == input.Error ||
+                    (this.Error != null &&
+                    this.Error.Equals(input.Error))
                 );
         }
 
@@ -105,7 +133,15 @@ namespace PTV.Developer.Clients.routing_osm.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = (hashCode * 59) + this.PolylineFormat.GetHashCode();
+                hashCode = (hashCode * 59) + this.Status.GetHashCode();
+                if (this.ReachableAreas != null)
+                {
+                    hashCode = (hashCode * 59) + this.ReachableAreas.GetHashCode();
+                }
+                if (this.Error != null)
+                {
+                    hashCode = (hashCode * 59) + this.Error.GetHashCode();
+                }
                 return hashCode;
             }
         }

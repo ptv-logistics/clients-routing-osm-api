@@ -26,28 +26,29 @@ using OpenAPIDateConverter = PTV.Developer.Clients.routing_osm.Client.OpenAPIDat
 namespace PTV.Developer.Clients.routing_osm.Model
 {
     /// <summary>
-    /// Defines Results
+    /// The current status of the calculation.  * &#x60;RUNNING&#x60; - The calculation is still running.  * &#x60;SUCCEEDED&#x60; - The calculation has completed successfully.  * &#x60;FAILED&#x60; - The calculation has completed with a failure.
     /// </summary>
+    /// <value>The current status of the calculation.  * &#x60;RUNNING&#x60; - The calculation is still running.  * &#x60;SUCCEEDED&#x60; - The calculation has completed successfully.  * &#x60;FAILED&#x60; - The calculation has completed with a failure.</value>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum Results
+    public enum CalculationStatus
     {
         /// <summary>
-        /// Enum LEGS for value: LEGS
+        /// Enum RUNNING for value: RUNNING
         /// </summary>
-        [EnumMember(Value = "LEGS")]
-        LEGS = 1,
+        [EnumMember(Value = "RUNNING")]
+        RUNNING = 1,
 
         /// <summary>
-        /// Enum LEGS_POLYLINE for value: LEGS_POLYLINE
+        /// Enum SUCCEEDED for value: SUCCEEDED
         /// </summary>
-        [EnumMember(Value = "LEGS_POLYLINE")]
-        LEGS_POLYLINE = 2,
+        [EnumMember(Value = "SUCCEEDED")]
+        SUCCEEDED = 2,
 
         /// <summary>
-        /// Enum POLYLINE for value: POLYLINE
+        /// Enum FAILED for value: FAILED
         /// </summary>
-        [EnumMember(Value = "POLYLINE")]
-        POLYLINE = 3
+        [EnumMember(Value = "FAILED")]
+        FAILED = 3
 
     }
 

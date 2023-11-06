@@ -26,25 +26,36 @@ using OpenAPIDateConverter = PTV.Developer.Clients.routing_osm.Client.OpenAPIDat
 namespace PTV.Developer.Clients.routing_osm.Model
 {
     /// <summary>
-    /// Options
+    /// The result of the reachable areas calculation.
     /// </summary>
-    [DataContract(Name = "Options")]
-    public partial class Options : IEquatable<Options>, IValidatableObject
+    [DataContract(Name = "ReachableAreas")]
+    public partial class ReachableAreas : IEquatable<ReachableAreas>, IValidatableObject
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReachableAreas" /> class.
+        /// </summary>
+        [JsonConstructorAttribute]
+        protected ReachableAreas() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReachableAreas" /> class.
+        /// </summary>
+        /// <param name="polygons">The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index. (required).</param>
+        public ReachableAreas(List<string> polygons = default(List<string>))
+        {
+            // to ensure "polygons" is required (not null)
+            if (polygons == null)
+            {
+                throw new ArgumentNullException("polygons is a required property for ReachableAreas and cannot be null");
+            }
+            this.Polygons = polygons;
+        }
 
         /// <summary>
-        /// Gets or Sets PolylineFormat
+        /// The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index.
         /// </summary>
-        [DataMember(Name = "polylineFormat", EmitDefaultValue = false)]
-        public PolylineFormat? PolylineFormat { get; set; }
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Options" /> class.
-        /// </summary>
-        /// <param name="polylineFormat">polylineFormat.</param>
-        public Options(PolylineFormat? polylineFormat = default(PolylineFormat?))
-        {
-            this.PolylineFormat = polylineFormat;
-        }
+        /// <value>The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index.</value>
+        [DataMember(Name = "polygons", IsRequired = true, EmitDefaultValue = true)]
+        public List<string> Polygons { get; set; }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -53,8 +64,8 @@ namespace PTV.Developer.Clients.routing_osm.Model
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("class Options {\n");
-            sb.Append("  PolylineFormat: ").Append(PolylineFormat).Append("\n");
+            sb.Append("class ReachableAreas {\n");
+            sb.Append("  Polygons: ").Append(Polygons).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -75,15 +86,15 @@ namespace PTV.Developer.Clients.routing_osm.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Options);
+            return this.Equals(input as ReachableAreas);
         }
 
         /// <summary>
-        /// Returns true if Options instances are equal
+        /// Returns true if ReachableAreas instances are equal
         /// </summary>
-        /// <param name="input">Instance of Options to be compared</param>
+        /// <param name="input">Instance of ReachableAreas to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Options input)
+        public bool Equals(ReachableAreas input)
         {
             if (input == null)
             {
@@ -91,8 +102,10 @@ namespace PTV.Developer.Clients.routing_osm.Model
             }
             return 
                 (
-                    this.PolylineFormat == input.PolylineFormat ||
-                    this.PolylineFormat.Equals(input.PolylineFormat)
+                    this.Polygons == input.Polygons ||
+                    this.Polygons != null &&
+                    input.Polygons != null &&
+                    this.Polygons.SequenceEqual(input.Polygons)
                 );
         }
 
@@ -105,7 +118,10 @@ namespace PTV.Developer.Clients.routing_osm.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                hashCode = (hashCode * 59) + this.PolylineFormat.GetHashCode();
+                if (this.Polygons != null)
+                {
+                    hashCode = (hashCode * 59) + this.Polygons.GetHashCode();
+                }
                 return hashCode;
             }
         }
