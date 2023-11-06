@@ -22,54 +22,61 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.ptvgroup.developer.client.routing_osm.model.PolylineFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
- * Options
+ * The result of the reachable areas calculation.
  */
+@ApiModel(description = "The result of the reachable areas calculation.")
 @JsonPropertyOrder({
-  Options.JSON_PROPERTY_POLYLINE_FORMAT
+  ReachableAreas.JSON_PROPERTY_POLYGONS
 })
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-06T13:42:06.924464Z[Etc/UTC]")
-public class Options {
-  public static final String JSON_PROPERTY_POLYLINE_FORMAT = "polylineFormat";
-  private PolylineFormat polylineFormat = PolylineFormat.GEO_JSON;
+public class ReachableAreas {
+  public static final String JSON_PROPERTY_POLYGONS = "polygons";
+  private List<String> polygons = new ArrayList<>();
 
-  public Options() { 
+  public ReachableAreas() { 
   }
 
-  public Options polylineFormat(PolylineFormat polylineFormat) {
-    this.polylineFormat = polylineFormat;
+  public ReachableAreas polygons(List<String> polygons) {
+    this.polygons = polygons;
+    return this;
+  }
+
+  public ReachableAreas addPolygonsItem(String polygonsItem) {
+    this.polygons.add(polygonsItem);
     return this;
   }
 
    /**
-   * Get polylineFormat
-   * @return polylineFormat
+   * The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index.
+   * @return polygons
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index.")
+  @JsonProperty(JSON_PROPERTY_POLYGONS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
 
-  public PolylineFormat getPolylineFormat() {
-    return polylineFormat;
+  public List<String> getPolygons() {
+    return polygons;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPolylineFormat(PolylineFormat polylineFormat) {
-    this.polylineFormat = polylineFormat;
+  @JsonProperty(JSON_PROPERTY_POLYGONS)
+  @JsonInclude(value = JsonInclude.Include.ALWAYS)
+  public void setPolygons(List<String> polygons) {
+    this.polygons = polygons;
   }
 
 
   /**
-   * Return true if this Options object is equal to o.
+   * Return true if this ReachableAreas object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +86,20 @@ public class Options {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Options options = (Options) o;
-    return Objects.equals(this.polylineFormat, options.polylineFormat);
+    ReachableAreas reachableAreas = (ReachableAreas) o;
+    return Objects.equals(this.polygons, reachableAreas.polygons);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(polylineFormat);
+    return Objects.hash(polygons);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Options {\n");
-    sb.append("    polylineFormat: ").append(toIndentedString(polylineFormat)).append("\n");
+    sb.append("class ReachableAreas {\n");
+    sb.append("    polygons: ").append(toIndentedString(polygons)).append("\n");
     sb.append("}");
     return sb.toString();
   }

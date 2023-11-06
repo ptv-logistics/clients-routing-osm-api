@@ -22,54 +22,54 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.ptvgroup.developer.client.routing_osm.model.PolylineFormat;
+import com.ptvgroup.developer.client.routing_osm.model.DrivingDirection;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 
 /**
- * Options
+ * ReachableOptions
  */
 @JsonPropertyOrder({
-  Options.JSON_PROPERTY_POLYLINE_FORMAT
+  ReachableOptions.JSON_PROPERTY_DRIVING_DIRECTION
 })
 @javax.annotation.processing.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-11-06T13:42:06.924464Z[Etc/UTC]")
-public class Options {
-  public static final String JSON_PROPERTY_POLYLINE_FORMAT = "polylineFormat";
-  private PolylineFormat polylineFormat = PolylineFormat.GEO_JSON;
+public class ReachableOptions {
+  public static final String JSON_PROPERTY_DRIVING_DIRECTION = "drivingDirection";
+  private DrivingDirection drivingDirection = DrivingDirection.OUTBOUND;
 
-  public Options() { 
+  public ReachableOptions() { 
   }
 
-  public Options polylineFormat(PolylineFormat polylineFormat) {
-    this.polylineFormat = polylineFormat;
+  public ReachableOptions drivingDirection(DrivingDirection drivingDirection) {
+    this.drivingDirection = drivingDirection;
     return this;
   }
 
    /**
-   * Get polylineFormat
-   * @return polylineFormat
+   * Get drivingDirection
+   * @return drivingDirection
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
+  @JsonProperty(JSON_PROPERTY_DRIVING_DIRECTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public PolylineFormat getPolylineFormat() {
-    return polylineFormat;
+  public DrivingDirection getDrivingDirection() {
+    return drivingDirection;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
+  @JsonProperty(JSON_PROPERTY_DRIVING_DIRECTION)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPolylineFormat(PolylineFormat polylineFormat) {
-    this.polylineFormat = polylineFormat;
+  public void setDrivingDirection(DrivingDirection drivingDirection) {
+    this.drivingDirection = drivingDirection;
   }
 
 
   /**
-   * Return true if this Options object is equal to o.
+   * Return true if this ReachableOptions object is equal to o.
    */
   @Override
   public boolean equals(Object o) {
@@ -79,20 +79,20 @@ public class Options {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Options options = (Options) o;
-    return Objects.equals(this.polylineFormat, options.polylineFormat);
+    ReachableOptions reachableOptions = (ReachableOptions) o;
+    return Objects.equals(this.drivingDirection, reachableOptions.drivingDirection);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(polylineFormat);
+    return Objects.hash(drivingDirection);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Options {\n");
-    sb.append("    polylineFormat: ").append(toIndentedString(polylineFormat)).append("\n");
+    sb.append("class ReachableOptions {\n");
+    sb.append("    drivingDirection: ").append(toIndentedString(drivingDirection)).append("\n");
     sb.append("}");
     return sb.toString();
   }

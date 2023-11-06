@@ -25,17 +25,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Defines the format for polylines in the response.  * &#x60;GEO_JSON&#x60; - Polylines are returned in the [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) format.  * &#x60;GOOGLE_ENCODED_POLYLINE&#x60; - Polylines are returned in [Google&#39;s Encoded Polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) format.
+ * Specifies the driving direction, i.e. from start to destination or from destination to start..  * &#x60;OUTBOUND&#x60; - Indicates an outbound routing from start to destination, i.e. the area which can be reached from the location within the given horizon. Use this value to calculate which can be covered e.g. by an emergency service such as a fire department.  * &#x60;INBOUND&#x60; - Indicates an inbound routing from destination to start, i.e. from where the location can be reached within the given horizon. Use this value to calculate the catchment area, e.g. of a school or a hospital.
  */
-public enum PolylineFormat {
+public enum DrivingDirection {
   
-  GEO_JSON("GEO_JSON"),
+  OUTBOUND("OUTBOUND"),
   
-  GOOGLE_ENCODED_POLYLINE("GOOGLE_ENCODED_POLYLINE");
+  INBOUND("INBOUND");
 
   private String value;
 
-  PolylineFormat(String value) {
+  DrivingDirection(String value) {
     this.value = value;
   }
 
@@ -50,8 +50,8 @@ public enum PolylineFormat {
   }
 
   @JsonCreator
-  public static PolylineFormat fromValue(String value) {
-    for (PolylineFormat b : PolylineFormat.values()) {
+  public static DrivingDirection fromValue(String value) {
+    for (DrivingDirection b : DrivingDirection.values()) {
       if (b.value.equals(value)) {
         return b;
       }

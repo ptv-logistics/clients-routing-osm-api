@@ -25,17 +25,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Defines the format for polylines in the response.  * &#x60;GEO_JSON&#x60; - Polylines are returned in the [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) format.  * &#x60;GOOGLE_ENCODED_POLYLINE&#x60; - Polylines are returned in [Google&#39;s Encoded Polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) format.
+ * Specifies the geographical horizon.  * &#x60;DISTANCE&#x60; - Represents a geographical horizon that is described by a distance. Every point or road segment that is reachable from the source within the specified distance is included in the horizon.  * &#x60;TRAVEL_TIME&#x60; - Represents a geographical horizon that is described by a travel time. Every point or road segment that is reachable from the source within the specified travel time is included in the horizon.
  */
-public enum PolylineFormat {
+public enum HorizonType {
   
-  GEO_JSON("GEO_JSON"),
+  DISTANCE("DISTANCE"),
   
-  GOOGLE_ENCODED_POLYLINE("GOOGLE_ENCODED_POLYLINE");
+  TRAVEL_TIME("TRAVEL_TIME");
 
   private String value;
 
-  PolylineFormat(String value) {
+  HorizonType(String value) {
     this.value = value;
   }
 
@@ -50,8 +50,8 @@ public enum PolylineFormat {
   }
 
   @JsonCreator
-  public static PolylineFormat fromValue(String value) {
-    for (PolylineFormat b : PolylineFormat.values()) {
+  public static HorizonType fromValue(String value) {
+    for (HorizonType b : HorizonType.values()) {
       if (b.value.equals(value)) {
         return b;
       }

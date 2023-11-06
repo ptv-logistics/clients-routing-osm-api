@@ -25,17 +25,19 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * Defines the format for polylines in the response.  * &#x60;GEO_JSON&#x60; - Polylines are returned in the [GeoJSON](https://en.wikipedia.org/wiki/GeoJSON) format.  * &#x60;GOOGLE_ENCODED_POLYLINE&#x60; - Polylines are returned in [Google&#39;s Encoded Polyline](https://developers.google.com/maps/documentation/utilities/polylinealgorithm) format.
+ * The current status of the calculation.  * &#x60;RUNNING&#x60; - The calculation is still running.  * &#x60;SUCCEEDED&#x60; - The calculation has completed successfully.  * &#x60;FAILED&#x60; - The calculation has completed with a failure.
  */
-public enum PolylineFormat {
+public enum CalculationStatus {
   
-  GEO_JSON("GEO_JSON"),
+  RUNNING("RUNNING"),
   
-  GOOGLE_ENCODED_POLYLINE("GOOGLE_ENCODED_POLYLINE");
+  SUCCEEDED("SUCCEEDED"),
+  
+  FAILED("FAILED");
 
   private String value;
 
-  PolylineFormat(String value) {
+  CalculationStatus(String value) {
     this.value = value;
   }
 
@@ -50,8 +52,8 @@ public enum PolylineFormat {
   }
 
   @JsonCreator
-  public static PolylineFormat fromValue(String value) {
-    for (PolylineFormat b : PolylineFormat.values()) {
+  public static CalculationStatus fromValue(String value) {
+    for (CalculationStatus b : CalculationStatus.values()) {
       if (b.value.equals(value)) {
         return b;
       }
