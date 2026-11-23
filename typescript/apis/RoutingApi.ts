@@ -12,27 +12,30 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ErrorResponse,
-  Options,
-  Results,
-  RouteResponse,
-} from '../models/index';
 import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type Options,
     OptionsFromJSON,
     OptionsToJSON,
+} from '../models/Options';
+import {
+    type Results,
     ResultsFromJSON,
     ResultsToJSON,
+} from '../models/Results';
+import {
+    type RouteResponse,
     RouteResponseFromJSON,
     RouteResponseToJSON,
-} from '../models/index';
+} from '../models/RouteResponse';
 
 export interface CalculateRouteRequest {
-    waypoints?: Array<string>;
+    waypoints: Array<string>;
     profile?: string;
     options?: Options;
     results?: Array<Results>;
@@ -44,9 +47,16 @@ export interface CalculateRouteRequest {
 export class RoutingApi extends runtime.BaseAPI {
 
     /**
-     * Calculates a route by specifying a list of waypoints.
+     * Creates request options for calculateRoute without sending the request
      */
-    async calculateRouteRaw(requestParameters: CalculateRouteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RouteResponse>> {
+    async calculateRouteRequestOpts(requestParameters: CalculateRouteRequest): Promise<runtime.RequestOpts> {
+        if (requestParameters['waypoints'] == null) {
+            throw new runtime.RequiredError(
+                'waypoints',
+                'Required parameter "waypoints" was null or undefined when calling calculateRoute().'
+            );
+        }
+
         const queryParameters: any = {};
 
         if (requestParameters['waypoints'] != null) {
@@ -71,12 +81,23 @@ export class RoutingApi extends runtime.BaseAPI {
             headerParameters["apiKey"] = await this.configuration.apiKey("apiKey"); // apiKeyAuth authentication
         }
 
-        const response = await this.request({
-            path: `/routes`,
+
+        let urlPath = `/routes`;
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Calculates a route by specifying a list of waypoints.
+     */
+    async calculateRouteRaw(requestParameters: CalculateRouteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<RouteResponse>> {
+        const requestOptions = await this.calculateRouteRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => RouteResponseFromJSON(jsonValue));
     }
@@ -84,7 +105,7 @@ export class RoutingApi extends runtime.BaseAPI {
     /**
      * Calculates a route by specifying a list of waypoints.
      */
-    async calculateRoute(requestParameters: CalculateRouteRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RouteResponse> {
+    async calculateRoute(requestParameters: CalculateRouteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<RouteResponse> {
         const response = await this.calculateRouteRaw(requestParameters, initOverrides);
         return await response.value();
     }

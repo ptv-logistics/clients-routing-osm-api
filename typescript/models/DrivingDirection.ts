@@ -49,3 +49,7 @@ export function DrivingDirectionToJSON(value?: DrivingDirection | null): any {
     return value as any;
 }
 
+export function DrivingDirectionToJSONTyped(value: any, ignoreDiscriminator: boolean): DrivingDirection {
+    return value as DrivingDirection;
+}
+

@@ -18,6 +18,7 @@ import {
     DrivingDirectionFromJSON,
     DrivingDirectionFromJSONTyped,
     DrivingDirectionToJSON,
+    DrivingDirectionToJSONTyped,
 } from './DrivingDirection';
 
 /**
@@ -57,10 +58,15 @@ export function ReachableOptionsFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function ReachableOptionsToJSON(value?: ReachableOptions | null): any {
+export function ReachableOptionsToJSON(json: any): ReachableOptions {
+    return ReachableOptionsToJSONTyped(json, false);
+}
+
+export function ReachableOptionsToJSONTyped(value?: ReachableOptions | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'drivingDirection': DrivingDirectionToJSON(value['drivingDirection']),

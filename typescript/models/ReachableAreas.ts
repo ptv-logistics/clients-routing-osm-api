@@ -49,10 +49,15 @@ export function ReachableAreasFromJSONTyped(json: any, ignoreDiscriminator: bool
     };
 }
 
-export function ReachableAreasToJSON(value?: ReachableAreas | null): any {
+export function ReachableAreasToJSON(json: any): ReachableAreas {
+    return ReachableAreasToJSONTyped(json, false);
+}
+
+export function ReachableAreasToJSONTyped(value?: ReachableAreas | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'polygons': value['polygons'],

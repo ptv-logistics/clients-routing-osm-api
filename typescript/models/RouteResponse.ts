@@ -18,6 +18,7 @@ import {
     LegFromJSON,
     LegFromJSONTyped,
     LegToJSON,
+    LegToJSONTyped,
 } from './Leg';
 
 /**
@@ -78,10 +79,15 @@ export function RouteResponseFromJSONTyped(json: any, ignoreDiscriminator: boole
     };
 }
 
-export function RouteResponseToJSON(value?: RouteResponse | null): any {
+export function RouteResponseToJSON(json: any): RouteResponse {
+    return RouteResponseToJSONTyped(json, false);
+}
+
+export function RouteResponseToJSONTyped(value?: RouteResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'distance': value['distance'],

@@ -49,10 +49,15 @@ export function ReachableAreasIdFromJSONTyped(json: any, ignoreDiscriminator: bo
     };
 }
 
-export function ReachableAreasIdToJSON(value?: ReachableAreasId | null): any {
+export function ReachableAreasIdToJSON(json: any): ReachableAreasId {
+    return ReachableAreasIdToJSONTyped(json, false);
+}
+
+export function ReachableAreasIdToJSONTyped(value?: ReachableAreasId | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'id': value['id'],

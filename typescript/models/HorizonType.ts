@@ -49,3 +49,7 @@ export function HorizonTypeToJSON(value?: HorizonType | null): any {
     return value as any;
 }
 
+export function HorizonTypeToJSONTyped(value: any, ignoreDiscriminator: boolean): HorizonType {
+    return value as HorizonType;
+}
+

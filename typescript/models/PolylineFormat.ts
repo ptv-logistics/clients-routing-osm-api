@@ -49,3 +49,7 @@ export function PolylineFormatToJSON(value?: PolylineFormat | null): any {
     return value as any;
 }
 
+export function PolylineFormatToJSONTyped(value: any, ignoreDiscriminator: boolean): PolylineFormat {
+    return value as PolylineFormat;
+}
+

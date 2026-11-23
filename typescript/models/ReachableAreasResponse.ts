@@ -18,18 +18,21 @@ import {
     CalculationStatusFromJSON,
     CalculationStatusFromJSONTyped,
     CalculationStatusToJSON,
+    CalculationStatusToJSONTyped,
 } from './CalculationStatus';
 import type { ReachableAreas } from './ReachableAreas';
 import {
     ReachableAreasFromJSON,
     ReachableAreasFromJSONTyped,
     ReachableAreasToJSON,
+    ReachableAreasToJSONTyped,
 } from './ReachableAreas';
 import type { ErrorResponse } from './ErrorResponse';
 import {
     ErrorResponseFromJSON,
     ErrorResponseFromJSONTyped,
     ErrorResponseToJSON,
+    ErrorResponseToJSONTyped,
 } from './ErrorResponse';
 
 /**
@@ -83,10 +86,15 @@ export function ReachableAreasResponseFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ReachableAreasResponseToJSON(value?: ReachableAreasResponse | null): any {
+export function ReachableAreasResponseToJSON(json: any): ReachableAreasResponse {
+    return ReachableAreasResponseToJSONTyped(json, false);
+}
+
+export function ReachableAreasResponseToJSONTyped(value?: ReachableAreasResponse | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'status': CalculationStatusToJSON(value['status']),

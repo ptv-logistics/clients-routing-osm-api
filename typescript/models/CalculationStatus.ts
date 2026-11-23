@@ -51,3 +51,7 @@ export function CalculationStatusToJSON(value?: CalculationStatus | null): any {
     return value as any;
 }
 
+export function CalculationStatusToJSONTyped(value: any, ignoreDiscriminator: boolean): CalculationStatus {
+    return value as CalculationStatus;
+}
+

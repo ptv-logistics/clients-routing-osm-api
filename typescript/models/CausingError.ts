@@ -71,7 +71,7 @@ export interface CausingError {
      *   * `attribute` - The invalid waypoint key.
      * * `ROUTING_DUPLICATE_WAYPOINT_ATTRIBUTE` - A waypoint attribute is duplicated.
      *   * `attribute` - The duplicated waypoint key.
-     * * `ROUTING_MUST_HAVE_WAYPOINTS` - The request must have at least two waypoints.
+     * * `ROUTING_MUST_HAVE_WAYPOINTS` - The request must have at least two waypoints. Deprecated; instead GENERAL_MISSING_PARAMETER is returned.
      * * `ROUTING_PROFILE_NOT_FOUND` - The requested profile could not be found.
      *   * `value` - The profile name.
      * * `ROUTING_ESTIMATED_DISTANCE_TOO_LONG` - The distance of the route (estimated by air-line) for non-motorized vehicles is too long. - _The **parameter** remains empty._
@@ -138,10 +138,15 @@ export function CausingErrorFromJSONTyped(json: any, ignoreDiscriminator: boolea
     };
 }
 
-export function CausingErrorToJSON(value?: CausingError | null): any {
+export function CausingErrorToJSON(json: any): CausingError {
+    return CausingErrorToJSONTyped(json, false);
+}
+
+export function CausingErrorToJSONTyped(value?: CausingError | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'description': value['description'],

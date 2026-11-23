@@ -48,3 +48,7 @@ export function ResultsToJSON(value?: Results | null): any {
     return value as any;
 }
 
+export function ResultsToJSONTyped(value: any, ignoreDiscriminator: boolean): Results {
+    return value as Results;
+}
+

@@ -12,30 +12,37 @@
  * Do not edit the class manually.
  */
 
-
 import * as runtime from '../runtime';
-import type {
-  ErrorResponse,
-  HorizonType,
-  ReachableAreas,
-  ReachableAreasId,
-  ReachableAreasResponse,
-  ReachableOptions,
-} from '../models/index';
 import {
+    type ErrorResponse,
     ErrorResponseFromJSON,
     ErrorResponseToJSON,
+} from '../models/ErrorResponse';
+import {
+    type HorizonType,
     HorizonTypeFromJSON,
     HorizonTypeToJSON,
+} from '../models/HorizonType';
+import {
+    type ReachableAreas,
     ReachableAreasFromJSON,
     ReachableAreasToJSON,
+} from '../models/ReachableAreas';
+import {
+    type ReachableAreasId,
     ReachableAreasIdFromJSON,
     ReachableAreasIdToJSON,
+} from '../models/ReachableAreasId';
+import {
+    type ReachableAreasResponse,
     ReachableAreasResponseFromJSON,
     ReachableAreasResponseToJSON,
+} from '../models/ReachableAreasResponse';
+import {
+    type ReachableOptions,
     ReachableOptionsFromJSON,
     ReachableOptionsToJSON,
-} from '../models/index';
+} from '../models/ReachableOptions';
 
 export interface CalculateReachableAreasRequest {
     waypoint: string;
@@ -68,9 +75,9 @@ export interface StartAndCreateReachableAreasRequest {
 export class ReachableAreasApi extends runtime.BaseAPI {
 
     /**
-     * Calculates the areas which can be reached from a waypoint, within given horizons (limited to 25 km or 20 minutes). Use the asynchronous POST and GET requests for larger horizons.
+     * Creates request options for calculateReachableAreas without sending the request
      */
-    async calculateReachableAreasRaw(requestParameters: CalculateReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreas>> {
+    async calculateReachableAreasRequestOpts(requestParameters: CalculateReachableAreasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['waypoint'] == null) {
             throw new runtime.RequiredError(
                 'waypoint',
@@ -113,12 +120,23 @@ export class ReachableAreasApi extends runtime.BaseAPI {
             headerParameters["apiKey"] = await this.configuration.apiKey("apiKey"); // apiKeyAuth authentication
         }
 
-        const response = await this.request({
-            path: `/reachable-areas`,
+
+        let urlPath = `/reachable-areas`;
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Calculates the areas which can be reached from a waypoint, within given horizons (limited to 25 km or 20 minutes). Use the asynchronous POST and GET requests for larger horizons.
+     */
+    async calculateReachableAreasRaw(requestParameters: CalculateReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreas>> {
+        const requestOptions = await this.calculateReachableAreasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ReachableAreasFromJSON(jsonValue));
     }
@@ -132,9 +150,9 @@ export class ReachableAreasApi extends runtime.BaseAPI {
     }
 
     /**
-     * Cancels a reachable areas calculation and deletes the calculated results specified by its ID. Results already calculated cannot be requested by its ID, anymore.
+     * Creates request options for deleteReachableAreas without sending the request
      */
-    async deleteReachableAreasRaw(requestParameters: DeleteReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async deleteReachableAreasRequestOpts(requestParameters: DeleteReachableAreasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -150,12 +168,24 @@ export class ReachableAreasApi extends runtime.BaseAPI {
             headerParameters["apiKey"] = await this.configuration.apiKey("apiKey"); // apiKeyAuth authentication
         }
 
-        const response = await this.request({
-            path: `/reachable-areas/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+
+        let urlPath = `/reachable-areas/{id}`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Cancels a reachable areas calculation and deletes the calculated results specified by its ID. Results already calculated cannot be requested by its ID, anymore.
+     */
+    async deleteReachableAreasRaw(requestParameters: DeleteReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        const requestOptions = await this.deleteReachableAreasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.VoidApiResponse(response);
     }
@@ -168,9 +198,9 @@ export class ReachableAreasApi extends runtime.BaseAPI {
     }
 
     /**
-     * Gets the results of a reachable areas calculation specified by its ID.
+     * Creates request options for getReachableAreas without sending the request
      */
-    async getReachableAreasRaw(requestParameters: GetReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreasResponse>> {
+    async getReachableAreasRequestOpts(requestParameters: GetReachableAreasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['id'] == null) {
             throw new runtime.RequiredError(
                 'id',
@@ -190,12 +220,24 @@ export class ReachableAreasApi extends runtime.BaseAPI {
             headerParameters["apiKey"] = await this.configuration.apiKey("apiKey"); // apiKeyAuth authentication
         }
 
-        const response = await this.request({
-            path: `/reachable-areas/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters['id']))),
+
+        let urlPath = `/reachable-areas/{id}`;
+        urlPath = urlPath.replace('{id}', encodeURIComponent(String(requestParameters['id'])));
+
+        return {
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Gets the results of a reachable areas calculation specified by its ID.
+     */
+    async getReachableAreasRaw(requestParameters: GetReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreasResponse>> {
+        const requestOptions = await this.getReachableAreasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ReachableAreasResponseFromJSON(jsonValue));
     }
@@ -209,9 +251,9 @@ export class ReachableAreasApi extends runtime.BaseAPI {
     }
 
     /**
-     * Starts and creates the areas which can be reached from a waypoint, within given horizons. This type of request is recommended when the `horizons` parameter is more than 20 minutes or 25 km.
+     * Creates request options for startAndCreateReachableAreas without sending the request
      */
-    async startAndCreateReachableAreasRaw(requestParameters: StartAndCreateReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreasId>> {
+    async startAndCreateReachableAreasRequestOpts(requestParameters: StartAndCreateReachableAreasRequest): Promise<runtime.RequestOpts> {
         if (requestParameters['waypoint'] == null) {
             throw new runtime.RequiredError(
                 'waypoint',
@@ -254,12 +296,23 @@ export class ReachableAreasApi extends runtime.BaseAPI {
             headerParameters["apiKey"] = await this.configuration.apiKey("apiKey"); // apiKeyAuth authentication
         }
 
-        const response = await this.request({
-            path: `/reachable-areas`,
+
+        let urlPath = `/reachable-areas`;
+
+        return {
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-        }, initOverrides);
+        };
+    }
+
+    /**
+     * Starts and creates the areas which can be reached from a waypoint, within given horizons. This type of request is recommended when the `horizons` parameter is more than 20 minutes or 25 km.
+     */
+    async startAndCreateReachableAreasRaw(requestParameters: StartAndCreateReachableAreasRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<ReachableAreasId>> {
+        const requestOptions = await this.startAndCreateReachableAreasRequestOpts(requestParameters);
+        const response = await this.request(requestOptions, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ReachableAreasIdFromJSON(jsonValue));
     }

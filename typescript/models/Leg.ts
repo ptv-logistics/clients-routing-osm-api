@@ -64,10 +64,15 @@ export function LegFromJSONTyped(json: any, ignoreDiscriminator: boolean): Leg {
     };
 }
 
-export function LegToJSON(value?: Leg | null): any {
+export function LegToJSON(json: any): Leg {
+    return LegToJSONTyped(json, false);
+}
+
+export function LegToJSONTyped(value?: Leg | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }
+
     return {
         
         'distance': value['distance'],
