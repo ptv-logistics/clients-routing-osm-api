@@ -37,15 +37,16 @@ import com.ptvgroup.developer.client.routing.osm.ApiClient;
 @JsonPropertyOrder({
   ReachableAreas.JSON_PROPERTY_POLYGONS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class ReachableAreas {
   public static final String JSON_PROPERTY_POLYGONS = "polygons";
-  private List<String> polygons = new ArrayList<>();
+  @javax.annotation.Nonnull
+  private List<String> polygons;
 
   public ReachableAreas() { 
   }
 
-  public ReachableAreas polygons(List<String> polygons) {
+  public ReachableAreas polygons(@javax.annotation.Nonnull List<String> polygons) {
     this.polygons = polygons;
     return this;
   }
@@ -63,16 +64,16 @@ public class ReachableAreas {
    * @return polygons
    */
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_POLYGONS)
+  @JsonProperty(value = JSON_PROPERTY_POLYGONS, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public List<String> getPolygons() {
     return polygons;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POLYGONS)
+  @JsonProperty(value = JSON_PROPERTY_POLYGONS, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setPolygons(List<String> polygons) {
+  public void setPolygons(@javax.annotation.Nonnull List<String> polygons) {
     this.polygons = polygons;
   }
 
@@ -111,10 +112,7 @@ public class ReachableAreas {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
   /**
@@ -152,9 +150,9 @@ public class ReachableAreas {
     // add `polygons` to the URL query string
     if (getPolygons() != null) {
       for (int i = 0; i < getPolygons().size(); i++) {
-        joiner.add(String.format("%spolygons%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix),
-            URLEncoder.encode(ApiClient.valueToString(getPolygons().get(i)), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+        joiner.add(String.format(java.util.Locale.ROOT, "%spolygons%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix),
+            ApiClient.urlEncode(ApiClient.valueToString(getPolygons().get(i)))));
       }
     }
 

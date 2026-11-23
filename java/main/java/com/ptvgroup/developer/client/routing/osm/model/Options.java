@@ -36,15 +36,16 @@ import com.ptvgroup.developer.client.routing.osm.ApiClient;
 @JsonPropertyOrder({
   Options.JSON_PROPERTY_POLYLINE_FORMAT
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class Options {
   public static final String JSON_PROPERTY_POLYLINE_FORMAT = "polylineFormat";
+  @javax.annotation.Nullable
   private PolylineFormat polylineFormat = PolylineFormat.GEO_JSON;
 
   public Options() { 
   }
 
-  public Options polylineFormat(PolylineFormat polylineFormat) {
+  public Options polylineFormat(@javax.annotation.Nullable PolylineFormat polylineFormat) {
     this.polylineFormat = polylineFormat;
     return this;
   }
@@ -54,16 +55,16 @@ public class Options {
    * @return polylineFormat
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
+  @JsonProperty(value = JSON_PROPERTY_POLYLINE_FORMAT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public PolylineFormat getPolylineFormat() {
     return polylineFormat;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POLYLINE_FORMAT)
+  @JsonProperty(value = JSON_PROPERTY_POLYLINE_FORMAT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPolylineFormat(PolylineFormat polylineFormat) {
+  public void setPolylineFormat(@javax.annotation.Nullable PolylineFormat polylineFormat) {
     this.polylineFormat = polylineFormat;
   }
 
@@ -102,10 +103,7 @@ public class Options {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
   /**
@@ -142,7 +140,7 @@ public class Options {
 
     // add `polylineFormat` to the URL query string
     if (getPolylineFormat() != null) {
-      joiner.add(String.format("%spolylineFormat%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getPolylineFormat()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%spolylineFormat%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPolylineFormat()))));
     }
 
     return joiner.toString();

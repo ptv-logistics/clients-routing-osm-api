@@ -36,15 +36,16 @@ import com.ptvgroup.developer.client.routing.osm.ApiClient;
 @JsonPropertyOrder({
   ReachableOptions.JSON_PROPERTY_DRIVING_DIRECTION
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class ReachableOptions {
   public static final String JSON_PROPERTY_DRIVING_DIRECTION = "drivingDirection";
+  @javax.annotation.Nullable
   private DrivingDirection drivingDirection = DrivingDirection.OUTBOUND;
 
   public ReachableOptions() { 
   }
 
-  public ReachableOptions drivingDirection(DrivingDirection drivingDirection) {
+  public ReachableOptions drivingDirection(@javax.annotation.Nullable DrivingDirection drivingDirection) {
     this.drivingDirection = drivingDirection;
     return this;
   }
@@ -54,16 +55,16 @@ public class ReachableOptions {
    * @return drivingDirection
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DRIVING_DIRECTION)
+  @JsonProperty(value = JSON_PROPERTY_DRIVING_DIRECTION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public DrivingDirection getDrivingDirection() {
     return drivingDirection;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DRIVING_DIRECTION)
+  @JsonProperty(value = JSON_PROPERTY_DRIVING_DIRECTION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDrivingDirection(DrivingDirection drivingDirection) {
+  public void setDrivingDirection(@javax.annotation.Nullable DrivingDirection drivingDirection) {
     this.drivingDirection = drivingDirection;
   }
 
@@ -102,10 +103,7 @@ public class ReachableOptions {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
   /**
@@ -142,7 +140,7 @@ public class ReachableOptions {
 
     // add `drivingDirection` to the URL query string
     if (getDrivingDirection() != null) {
-      joiner.add(String.format("%sdrivingDirection%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getDrivingDirection()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%sdrivingDirection%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDrivingDirection()))));
     }
 
     return joiner.toString();

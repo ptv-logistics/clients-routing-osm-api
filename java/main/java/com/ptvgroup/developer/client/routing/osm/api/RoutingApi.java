@@ -15,6 +15,7 @@ package com.ptvgroup.developer.client.routing.osm.api;
 import com.ptvgroup.developer.client.routing.osm.ApiClient;
 import com.ptvgroup.developer.client.routing.osm.ApiException;
 import com.ptvgroup.developer.client.routing.osm.ApiResponse;
+import com.ptvgroup.developer.client.routing.osm.Configuration;
 import com.ptvgroup.developer.client.routing.osm.Pair;
 
 import com.ptvgroup.developer.client.routing.osm.model.ErrorResponse;
@@ -47,18 +48,38 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class RoutingApi {
+  /**
+   * Utility class for extending HttpRequest.Builder functionality.
+   */
+  private static class HttpRequestBuilderExtensions {
+    /**
+     * Adds additional headers to the provided HttpRequest.Builder. Useful for adding method/endpoint specific headers.
+     *
+     * @param builder the HttpRequest.Builder to which headers will be added
+     * @param headers a map of header names and values to add; may be null
+     * @return the same HttpRequest.Builder instance with the additional headers set
+     */
+    static HttpRequest.Builder withAdditionalHeaders(HttpRequest.Builder builder, Map<String, String> headers) {
+        if (headers != null) {
+            for (Map.Entry<String, String> entry : headers.entrySet()) {
+                builder.header(entry.getKey(), entry.getValue());
+            }
+        }
+        return builder;
+    }
+  }
   private final HttpClient memberVarHttpClient;
   private final ObjectMapper memberVarObjectMapper;
   private final String memberVarBaseUri;
   private final Consumer<HttpRequest.Builder> memberVarInterceptor;
   private final Duration memberVarReadTimeout;
   private final Consumer<HttpResponse<InputStream>> memberVarResponseInterceptor;
-  private final Consumer<HttpResponse<String>> memberVarAsyncResponseInterceptor;
+  private final Consumer<HttpResponse<InputStream>> memberVarAsyncResponseInterceptor;
 
   public RoutingApi() {
-    this(new ApiClient());
+    this(Configuration.getDefaultApiClient());
   }
 
   public RoutingApi(ApiClient apiClient) {
@@ -71,8 +92,17 @@ public class RoutingApi {
     memberVarAsyncResponseInterceptor = apiClient.getAsyncResponseInterceptor();
   }
 
+
   protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
-    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    InputStream responseBody = ApiClient.getResponseBody(response);
+    String body = null;
+    try {
+      body = responseBody == null ? null : new String(responseBody.readAllBytes());
+    } finally {
+      if (responseBody != null) {
+        responseBody.close();
+      }
+    }
     String message = formatExceptionMessage(operationId, response.statusCode(), body);
     return new ApiException(response.statusCode(), message, response.headers(), body);
   }
@@ -85,32 +115,113 @@ public class RoutingApi {
   }
 
   /**
+   * Download file from the given response.
+   *
+   * @param response Response
+   * @return File
+   * @throws ApiException If fail to read file content from response and write to disk
+   */
+  public File downloadFileFromResponse(HttpResponse<InputStream> response, InputStream responseBody) throws ApiException {
+    if (responseBody == null) {
+      throw new ApiException(new IOException("Response body is empty"));
+    }
+    try {
+      File file = prepareDownloadFile(response);
+      java.nio.file.Files.copy(responseBody, file.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+      return file;
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+  }
+
+  /**
+   * <p>Prepare the file for download from the response.</p>
+   *
+   * @param response a {@link java.net.http.HttpResponse} object.
+   * @return a {@link java.io.File} object.
+   * @throws java.io.IOException if any.
+   */
+  private File prepareDownloadFile(HttpResponse<InputStream> response) throws IOException {
+    String filename = null;
+    java.util.Optional<String> contentDisposition = response.headers().firstValue("Content-Disposition");
+    if (contentDisposition.isPresent() && !"".equals(contentDisposition.get())) {
+      // Get filename from the Content-Disposition header.
+      java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("filename=['\"]?([^'\"\\s]+)['\"]?");
+      java.util.regex.Matcher matcher = pattern.matcher(contentDisposition.get());
+      if (matcher.find())
+        filename = matcher.group(1);
+    }
+    File file = null;
+    if (filename != null) {
+      java.nio.file.Path tempDir = java.nio.file.Files.createTempDirectory("swagger-gen-native");
+      java.nio.file.Path filePath = java.nio.file.Files.createFile(tempDir.resolve(filename));
+      file = filePath.toFile();
+      tempDir.toFile().deleteOnExit();   // best effort cleanup
+      file.deleteOnExit(); // best effort cleanup
+    } else {
+      file = java.nio.file.Files.createTempFile("download-", "").toFile();
+      file.deleteOnExit(); // best effort cleanup
+    }
+    return file;
+  }
+
+  /**
    * 
    * Calculates a route by specifying a list of waypoints.
-   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (optional)
+   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (required)
    * @param profile A profile defines a vehicle by a set of attributes, matching typical transport situations. It must be the name of one of the [predefined profiles](../data-api/concepts/osm-profiles) such as _EUR_OSM_CAR_. (optional, default to EUR_OSM_CAR)
    * @param options Routing-relevant options like the polyline format. Use array notation like &#x60;options[polylineFormat]&#x3D;GEO_JSON&#x60; to set options. (optional)
    * @param results Comma-separated list that defines which results will be returned.  * &#x60;LEGS&#x60;     Response includes information about the route **legs** defined as the parts of the route between two consecutive waypoints.  * &#x60;LEGS_POLYLINE&#x60;     Response includes the **polyline** of each of the **legs** in the format specified by **options[polylineFormat]**. _LEGS_ will automatically be included.  * &#x60;POLYLINE&#x60;     Response includes the complete **polyline** of the entire route in the format specified by **options[polylineFormat]**. (optional)
    * @return RouteResponse
    * @throws ApiException if fails to make API call
    */
-  public RouteResponse calculateRoute(List<String> waypoints, String profile, Options options, List<Results> results) throws ApiException {
-    ApiResponse<RouteResponse> localVarResponse = calculateRouteWithHttpInfo(waypoints, profile, options, results);
+  public RouteResponse calculateRoute(@javax.annotation.Nonnull List<String> waypoints, @javax.annotation.Nullable String profile, @javax.annotation.Nullable Options options, @javax.annotation.Nullable List<Results> results) throws ApiException {
+    return calculateRoute(waypoints, profile, options, results, null);
+  }
+
+  /**
+   * 
+   * Calculates a route by specifying a list of waypoints.
+   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (required)
+   * @param profile A profile defines a vehicle by a set of attributes, matching typical transport situations. It must be the name of one of the [predefined profiles](../data-api/concepts/osm-profiles) such as _EUR_OSM_CAR_. (optional, default to EUR_OSM_CAR)
+   * @param options Routing-relevant options like the polyline format. Use array notation like &#x60;options[polylineFormat]&#x3D;GEO_JSON&#x60; to set options. (optional)
+   * @param results Comma-separated list that defines which results will be returned.  * &#x60;LEGS&#x60;     Response includes information about the route **legs** defined as the parts of the route between two consecutive waypoints.  * &#x60;LEGS_POLYLINE&#x60;     Response includes the **polyline** of each of the **legs** in the format specified by **options[polylineFormat]**. _LEGS_ will automatically be included.  * &#x60;POLYLINE&#x60;     Response includes the complete **polyline** of the entire route in the format specified by **options[polylineFormat]**. (optional)
+   * @param headers Optional headers to include in the request
+   * @return RouteResponse
+   * @throws ApiException if fails to make API call
+   */
+  public RouteResponse calculateRoute(@javax.annotation.Nonnull List<String> waypoints, @javax.annotation.Nullable String profile, @javax.annotation.Nullable Options options, @javax.annotation.Nullable List<Results> results, Map<String, String> headers) throws ApiException {
+    ApiResponse<RouteResponse> localVarResponse = calculateRouteWithHttpInfo(waypoints, profile, options, results, headers);
     return localVarResponse.getData();
   }
 
   /**
    * 
    * Calculates a route by specifying a list of waypoints.
-   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (optional)
+   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (required)
    * @param profile A profile defines a vehicle by a set of attributes, matching typical transport situations. It must be the name of one of the [predefined profiles](../data-api/concepts/osm-profiles) such as _EUR_OSM_CAR_. (optional, default to EUR_OSM_CAR)
    * @param options Routing-relevant options like the polyline format. Use array notation like &#x60;options[polylineFormat]&#x3D;GEO_JSON&#x60; to set options. (optional)
    * @param results Comma-separated list that defines which results will be returned.  * &#x60;LEGS&#x60;     Response includes information about the route **legs** defined as the parts of the route between two consecutive waypoints.  * &#x60;LEGS_POLYLINE&#x60;     Response includes the **polyline** of each of the **legs** in the format specified by **options[polylineFormat]**. _LEGS_ will automatically be included.  * &#x60;POLYLINE&#x60;     Response includes the complete **polyline** of the entire route in the format specified by **options[polylineFormat]**. (optional)
    * @return ApiResponse&lt;RouteResponse&gt;
    * @throws ApiException if fails to make API call
    */
-  public ApiResponse<RouteResponse> calculateRouteWithHttpInfo(List<String> waypoints, String profile, Options options, List<Results> results) throws ApiException {
-    HttpRequest.Builder localVarRequestBuilder = calculateRouteRequestBuilder(waypoints, profile, options, results);
+  public ApiResponse<RouteResponse> calculateRouteWithHttpInfo(@javax.annotation.Nonnull List<String> waypoints, @javax.annotation.Nullable String profile, @javax.annotation.Nullable Options options, @javax.annotation.Nullable List<Results> results) throws ApiException {
+    return calculateRouteWithHttpInfo(waypoints, profile, options, results, null);
+  }
+
+  /**
+   * 
+   * Calculates a route by specifying a list of waypoints.
+   * @param waypoints The list of waypoints the route will be calculated for. At least two waypoints are necessary. The first waypoint is the start and the last is the destination of the route. Additional intermediate waypoints are possible.   The format of each waypoint is &#x60;&lt;lat&gt;,&lt;lon&gt;[;&lt;attribute&gt;;&lt;attribute&gt;;...]&#x60; representing a point with the latitude value in degrees from south to north and the longitude value in degrees (WGS84/EPSG:4326) from west to east. This point will be matched to the nearest possible road.   By default the air-line connection between given and matched coordinates is not included in the route polyline, distance and duration. We will refer to this type of waypoint as an _on-road waypoint_.  The behavior of a waypoint can be changed by appending the following attributes:    * &#x60;includeLastMeters&#x60; to include the air-line connection between given and matched coordinates in the route polyline, distance and duration.  We will refer to this type of waypoint as an _off-road waypoint_.  * &#x60;roadAccess&#x3D;&lt;lat&gt;,&lt;lon&gt;&#x60;, to use these coordinates for matching to the nearest road. Implies **includeLastMeter**, i.e.  the air-line connection between the waypoint coordinates and the matched coordinates  is included in the route polyline, distance and duration. This is useful if the waypoint should not be matched to the nearest possible road but to some road further away,  e.g. garage exit at a different road. (required)
+   * @param profile A profile defines a vehicle by a set of attributes, matching typical transport situations. It must be the name of one of the [predefined profiles](../data-api/concepts/osm-profiles) such as _EUR_OSM_CAR_. (optional, default to EUR_OSM_CAR)
+   * @param options Routing-relevant options like the polyline format. Use array notation like &#x60;options[polylineFormat]&#x3D;GEO_JSON&#x60; to set options. (optional)
+   * @param results Comma-separated list that defines which results will be returned.  * &#x60;LEGS&#x60;     Response includes information about the route **legs** defined as the parts of the route between two consecutive waypoints.  * &#x60;LEGS_POLYLINE&#x60;     Response includes the **polyline** of each of the **legs** in the format specified by **options[polylineFormat]**. _LEGS_ will automatically be included.  * &#x60;POLYLINE&#x60;     Response includes the complete **polyline** of the entire route in the format specified by **options[polylineFormat]**. (optional)
+   * @param headers Optional headers to include in the request
+   * @return ApiResponse&lt;RouteResponse&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<RouteResponse> calculateRouteWithHttpInfo(@javax.annotation.Nonnull List<String> waypoints, @javax.annotation.Nullable String profile, @javax.annotation.Nullable Options options, @javax.annotation.Nullable List<Results> results, Map<String, String> headers) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = calculateRouteRequestBuilder(waypoints, profile, options, results, headers);
     try {
       HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
           localVarRequestBuilder.build(),
@@ -118,16 +229,35 @@ public class RoutingApi {
       if (memberVarResponseInterceptor != null) {
         memberVarResponseInterceptor.accept(localVarResponse);
       }
+      InputStream localVarResponseBody = null;
       try {
         if (localVarResponse.statusCode()/ 100 != 2) {
           throw getApiException("calculateRoute", localVarResponse);
         }
+        localVarResponseBody = ApiClient.getResponseBody(localVarResponse);
+        if (localVarResponseBody == null) {
+          return new ApiResponse<RouteResponse>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        
+        
+        String responseBody = new String(localVarResponseBody.readAllBytes());
+        RouteResponse responseValue = responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<RouteResponse>() {});
+        
+
         return new ApiResponse<RouteResponse>(
-          localVarResponse.statusCode(),
-          localVarResponse.headers().map(),
-          localVarResponse.body() == null ? null : memberVarObjectMapper.readValue(localVarResponse.body(), new TypeReference<RouteResponse>() {}) // closes the InputStream
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseValue
         );
       } finally {
+        if (localVarResponseBody != null) {
+          localVarResponseBody.close();
+        }
       }
     } catch (IOException e) {
       throw new ApiException(e);
@@ -138,7 +268,11 @@ public class RoutingApi {
     }
   }
 
-  private HttpRequest.Builder calculateRouteRequestBuilder(List<String> waypoints, String profile, Options options, List<Results> results) throws ApiException {
+  private HttpRequest.Builder calculateRouteRequestBuilder(@javax.annotation.Nonnull List<String> waypoints, @javax.annotation.Nullable String profile, @javax.annotation.Nullable Options options, @javax.annotation.Nullable List<Results> results, Map<String, String> headers) throws ApiException {
+    // verify the required parameter 'waypoints' is set
+    if (waypoints == null) {
+      throw new ApiException(400, "Missing the required parameter 'waypoints' when calling calculateRoute");
+    }
 
     HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
@@ -178,6 +312,8 @@ public class RoutingApi {
     if (memberVarReadTimeout != null) {
       localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
+    // Add custom headers if provided
+    localVarRequestBuilder = HttpRequestBuilderExtensions.withAdditionalHeaders(localVarRequestBuilder, headers);
     if (memberVarInterceptor != null) {
       memberVarInterceptor.accept(localVarRequestBuilder);
     }

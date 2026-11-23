@@ -13,45 +13,25 @@
 
 package com.ptvgroup.developer.client.routing.osm;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class Pair {
-    private String name = "";
-    private String value = "";
+  private final String name;
+  private final String value;
 
-    public Pair (String name, String value) {
-        setName(name);
-        setValue(value);
-    }
+  public Pair(String name, String value) {
+    this.name = isValidString(name) ? name : "";
+    this.value = isValidString(value) ? value : "";
+  }
 
-    private void setName(String name) {
-        if (!isValidString(name)) {
-            return;
-        }
+  public String getName() {
+    return this.name;
+  }
 
-        this.name = name;
-    }
+  public String getValue() {
+    return this.value;
+  }
 
-    private void setValue(String value) {
-        if (!isValidString(value)) {
-            return;
-        }
-
-        this.value = value;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getValue() {
-        return this.value;
-    }
-
-    private boolean isValidString(String arg) {
-        if (arg == null) {
-            return false;
-        }
-
-        return true;
-    }
+  private static boolean isValidString(String arg) {
+    return arg != null;
+  }
 }

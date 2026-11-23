@@ -5,11 +5,11 @@ Using client classes makes it easier and more convenient to integrate the API in
 
 Language depending information:
 * **DotNet:** Please add the following nuget packages to your client project
-  * Please use .NET 6.0
-  * JsonSubTypes (1.8.0)
-  * Polly (7.2.3)
-  * RestSharp (106.13.0)
-  * System.ComponentModel.Annotations (5.0.0)
+  * Please use .NET 8.0 or .NET 10.0
+  * JsonSubTypes (2.0.1)
+  * Newtonsoft.Json (13.0.3)
+  * Polly (8.1.0)
+  * RestSharp (112.0.0)
   
   To initialize your client with your APIKey you can use the following snippet:
     ```
@@ -23,27 +23,27 @@ Language depending information:
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.10.4</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
-            <version>2.10.4</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.10.4</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.10.4</version>
+            <version>2.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.openapitools</groupId>
             <artifactId>jackson-databind-nullable</artifactId>
-            <version>0.2.1</version>
+            <version>0.2.6</version>
         </dependency>
         <dependency>
             <groupId>com.github.ptv-logistics</groupId>

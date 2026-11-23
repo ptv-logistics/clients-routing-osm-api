@@ -40,24 +40,28 @@ import com.ptvgroup.developer.client.routing.osm.ApiClient;
   CausingError.JSON_PROPERTY_PARAMETER,
   CausingError.JSON_PROPERTY_DETAILS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class CausingError {
   public static final String JSON_PROPERTY_DESCRIPTION = "description";
+  @javax.annotation.Nonnull
   private String description;
 
   public static final String JSON_PROPERTY_ERROR_CODE = "errorCode";
+  @javax.annotation.Nonnull
   private String errorCode;
 
   public static final String JSON_PROPERTY_PARAMETER = "parameter";
+  @javax.annotation.Nullable
   private String parameter;
 
   public static final String JSON_PROPERTY_DETAILS = "details";
-  private Map<String, Object> details = new HashMap<>();
+  @javax.annotation.Nullable
+  private Map<String, Object> details;
 
   public CausingError() { 
   }
 
-  public CausingError description(String description) {
+  public CausingError description(@javax.annotation.Nonnull String description) {
     this.description = description;
     return this;
   }
@@ -67,45 +71,45 @@ public class CausingError {
    * @return description
    */
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(value = JSON_PROPERTY_DESCRIPTION, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getDescription() {
     return description;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(value = JSON_PROPERTY_DESCRIPTION, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDescription(String description) {
+  public void setDescription(@javax.annotation.Nonnull String description) {
     this.description = description;
   }
 
 
-  public CausingError errorCode(String errorCode) {
+  public CausingError errorCode(@javax.annotation.Nonnull String errorCode) {
     this.errorCode = errorCode;
     return this;
   }
 
   /**
-   * A constant string that can be used to identify this error class programmatically.  If additional information is available for an errorCode, it will be provided as key-value pairs with the parameter **details**. The keys available for a specific errorCode are documented directly with the errorCode. Unless stated otherwise, the values are of type string.  As an example, the following errorCode provides one key-value pair in the **details**. The key is called **value**. * &#x60;GENERAL_INVALID_VALUE&#x60; - A parameter is set to an invalid value.   * &#x60;value&#x60; - The invalid value.  Note that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  **Error codes for** &#x60;GENERAL_VALIDATION_ERROR&#x60;  * &#x60;GENERAL_UNRECOGNIZED_PARAMETER&#x60; - A parameter is unknown. * &#x60;GENERAL_MISSING_PARAMETER&#x60; - A required parameter is missing. * &#x60;GENERAL_TYPE_VIOLATED&#x60; - The value of a parameter has an invalid type.   * &#x60;type&#x60; - The type. * &#x60;GENERAL_FORMAT_VIOLATED&#x60; - The value of a parameter has an invalid format.   * &#x60;format&#x60; - The format. * &#x60;GENERAL_PATTERN_VIOLATED&#x60; - The value of a string parameter does not satisfy the required pattern.   * &#x60;pattern&#x60; - The pattern. * &#x60;GENERAL_MINIMUM_LENGTH_VIOLATED&#x60; - The minimum length of a string is violated.   * &#x60;minimumLength&#x60; - The minimum length (integer). * &#x60;GENERAL_MAXIMUM_LENGTH_VIOLATED&#x60; - The maximum length of a string is violated.   * &#x60;maximumLength&#x60; - The maximum length (integer). * &#x60;GENERAL_MINIMUM_ITEMS_VIOLATED&#x60; - The minimum number of items of an array is violated.   * &#x60;minimumItems&#x60; - The minimum number of items (integer). * &#x60;GENERAL_MAXIMUM_ITEMS_VIOLATED&#x60; - The maximum number of items of an array is violated.   * &#x60;maximumItems&#x60; - The maximum number of items (integer). * &#x60;GENERAL_MINIMUM_VALUE_VIOLATED&#x60; - The minimum value of a parameter is violated.   * &#x60;minimumValue&#x60; - The minimum value (integer or double). * &#x60;GENERAL_MAXIMUM_VALUE_VIOLATED&#x60; - The maximum value of a parameter is violated.   * &#x60;maximumValue&#x60; - The maximum value (integer or double). * &#x60;GENERAL_ENUM_VIOLATED&#x60; - The value of a parameter is not one of the specified enum values.   * &#x60;enum&#x60; - The allowed enum values. * &#x60;GENERAL_INVALID_VALUE&#x60; - A parameter is set to an invalid value.   * &#x60;value&#x60; - The invalid value. * &#x60;GENERAL_DUPLICATE_PARAMETER&#x60; - A parameter is duplicated. * &#x60;GENERAL_INVALID_LIST&#x60; - A list has an invalid format such as duplicate commas.   * &#x60;value&#x60; - The invalid list. * &#x60;ROUTING_INVALID_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is set to an invalid value.   * &#x60;attribute&#x60; - The invalid waypoint attribute. * &#x60;ROUTING_UNRECOGNIZED_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is unknown.   * &#x60;attribute&#x60; - The invalid waypoint key. * &#x60;ROUTING_DUPLICATE_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is duplicated.   * &#x60;attribute&#x60; - The duplicated waypoint key. * &#x60;ROUTING_MUST_HAVE_WAYPOINTS&#x60; - The request must have at least two waypoints. * &#x60;ROUTING_PROFILE_NOT_FOUND&#x60; - The requested profile could not be found.   * &#x60;value&#x60; - The profile name. * &#x60;ROUTING_ESTIMATED_DISTANCE_TOO_LONG&#x60; - The distance of the route (estimated by air-line) for non-motorized vehicles is too long. - _The **parameter** remains empty._   * &#x60;distance&#x60; - The estimated distance (integer).   * &#x60;limit&#x60; - The maximum allowable distance (integer). * &#x60;ROUTING_MAXIMUM_HORIZON_VALUE_VIOLATED&#x60; - The maximum value of horizon is violated.   * &#x60;limit&#x60; - The maximum allowable horizon (integer).  **Error codes for** &#x60;ROUTING_ERROR&#x60;  * &#x60;ROUTING_WAYPOINT_CANNOT_BE_MATCHED&#x60; - The waypoint cannot be matched to the nearest possible road. * &#x60;ROUTING_ROUTE_NOT_FOUND&#x60; - A route between at least two waypoints could not be found for the current configuration and profile. The **parameter** contains the waypoint where the problematic part that could not be routed starts, i.e., the problematic part of the route is between this waypoint and the next one. Note that only the first problematic part that was encountered is reported.  **Error codes for** &#x60;ROUTING_RESTRICTION_EXCEEDED&#x60;  * &#x60;ROUTING_TOO_MANY_WAYPOINTS&#x60; - The request contains too many waypoints.   * &#x60;limit&#x60;- The maximum allowed number of waypoints for a single request (integer).  **Error codes for** &#x60;GENERAL_RESOURCE_NOT_FOUND&#x60;  * &#x60;GENERAL_INVALID_ID&#x60; - No resource exists for the provided ID.   * &#x60;value&#x60; - The ID for which no resource exists.
+   * A constant string that can be used to identify this error class programmatically.  If additional information is available for an errorCode, it will be provided as key-value pairs with the parameter **details**. The keys available for a specific errorCode are documented directly with the errorCode. Unless stated otherwise, the values are of type string.  As an example, the following errorCode provides one key-value pair in the **details**. The key is called **value**. * &#x60;GENERAL_INVALID_VALUE&#x60; - A parameter is set to an invalid value.   * &#x60;value&#x60; - The invalid value.  Note that additional errorCodes as well as the **details** of existing errorCodes may be added at any time. Furthermore, the **description** may change at any time.  **Error codes for** &#x60;GENERAL_VALIDATION_ERROR&#x60;  * &#x60;GENERAL_UNRECOGNIZED_PARAMETER&#x60; - A parameter is unknown. * &#x60;GENERAL_MISSING_PARAMETER&#x60; - A required parameter is missing. * &#x60;GENERAL_TYPE_VIOLATED&#x60; - The value of a parameter has an invalid type.   * &#x60;type&#x60; - The type. * &#x60;GENERAL_FORMAT_VIOLATED&#x60; - The value of a parameter has an invalid format.   * &#x60;format&#x60; - The format. * &#x60;GENERAL_PATTERN_VIOLATED&#x60; - The value of a string parameter does not satisfy the required pattern.   * &#x60;pattern&#x60; - The pattern. * &#x60;GENERAL_MINIMUM_LENGTH_VIOLATED&#x60; - The minimum length of a string is violated.   * &#x60;minimumLength&#x60; - The minimum length (integer). * &#x60;GENERAL_MAXIMUM_LENGTH_VIOLATED&#x60; - The maximum length of a string is violated.   * &#x60;maximumLength&#x60; - The maximum length (integer). * &#x60;GENERAL_MINIMUM_ITEMS_VIOLATED&#x60; - The minimum number of items of an array is violated.   * &#x60;minimumItems&#x60; - The minimum number of items (integer). * &#x60;GENERAL_MAXIMUM_ITEMS_VIOLATED&#x60; - The maximum number of items of an array is violated.   * &#x60;maximumItems&#x60; - The maximum number of items (integer). * &#x60;GENERAL_MINIMUM_VALUE_VIOLATED&#x60; - The minimum value of a parameter is violated.   * &#x60;minimumValue&#x60; - The minimum value (integer or double). * &#x60;GENERAL_MAXIMUM_VALUE_VIOLATED&#x60; - The maximum value of a parameter is violated.   * &#x60;maximumValue&#x60; - The maximum value (integer or double). * &#x60;GENERAL_ENUM_VIOLATED&#x60; - The value of a parameter is not one of the specified enum values.   * &#x60;enum&#x60; - The allowed enum values. * &#x60;GENERAL_INVALID_VALUE&#x60; - A parameter is set to an invalid value.   * &#x60;value&#x60; - The invalid value. * &#x60;GENERAL_DUPLICATE_PARAMETER&#x60; - A parameter is duplicated. * &#x60;GENERAL_INVALID_LIST&#x60; - A list has an invalid format such as duplicate commas.   * &#x60;value&#x60; - The invalid list. * &#x60;ROUTING_INVALID_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is set to an invalid value.   * &#x60;attribute&#x60; - The invalid waypoint attribute. * &#x60;ROUTING_UNRECOGNIZED_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is unknown.   * &#x60;attribute&#x60; - The invalid waypoint key. * &#x60;ROUTING_DUPLICATE_WAYPOINT_ATTRIBUTE&#x60; - A waypoint attribute is duplicated.   * &#x60;attribute&#x60; - The duplicated waypoint key. * &#x60;ROUTING_MUST_HAVE_WAYPOINTS&#x60; - The request must have at least two waypoints. Deprecated; instead GENERAL_MISSING_PARAMETER is returned. * &#x60;ROUTING_PROFILE_NOT_FOUND&#x60; - The requested profile could not be found.   * &#x60;value&#x60; - The profile name. * &#x60;ROUTING_ESTIMATED_DISTANCE_TOO_LONG&#x60; - The distance of the route (estimated by air-line) for non-motorized vehicles is too long. - _The **parameter** remains empty._   * &#x60;distance&#x60; - The estimated distance (integer).   * &#x60;limit&#x60; - The maximum allowable distance (integer). * &#x60;ROUTING_MAXIMUM_HORIZON_VALUE_VIOLATED&#x60; - The maximum value of horizon is violated.   * &#x60;limit&#x60; - The maximum allowable horizon (integer).  **Error codes for** &#x60;ROUTING_ERROR&#x60;  * &#x60;ROUTING_WAYPOINT_CANNOT_BE_MATCHED&#x60; - The waypoint cannot be matched to the nearest possible road. * &#x60;ROUTING_ROUTE_NOT_FOUND&#x60; - A route between at least two waypoints could not be found for the current configuration and profile. The **parameter** contains the waypoint where the problematic part that could not be routed starts, i.e., the problematic part of the route is between this waypoint and the next one. Note that only the first problematic part that was encountered is reported.  **Error codes for** &#x60;ROUTING_RESTRICTION_EXCEEDED&#x60;  * &#x60;ROUTING_TOO_MANY_WAYPOINTS&#x60; - The request contains too many waypoints.   * &#x60;limit&#x60;- The maximum allowed number of waypoints for a single request (integer).  **Error codes for** &#x60;GENERAL_RESOURCE_NOT_FOUND&#x60;  * &#x60;GENERAL_INVALID_ID&#x60; - No resource exists for the provided ID.   * &#x60;value&#x60; - The ID for which no resource exists.
    * @return errorCode
    */
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ERROR_CODE)
+  @JsonProperty(value = JSON_PROPERTY_ERROR_CODE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public String getErrorCode() {
     return errorCode;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ERROR_CODE)
+  @JsonProperty(value = JSON_PROPERTY_ERROR_CODE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setErrorCode(String errorCode) {
+  public void setErrorCode(@javax.annotation.Nonnull String errorCode) {
     this.errorCode = errorCode;
   }
 
 
-  public CausingError parameter(String parameter) {
+  public CausingError parameter(@javax.annotation.Nullable String parameter) {
     this.parameter = parameter;
     return this;
   }
@@ -115,21 +119,21 @@ public class CausingError {
    * @return parameter
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PARAMETER)
+  @JsonProperty(value = JSON_PROPERTY_PARAMETER, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getParameter() {
     return parameter;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PARAMETER)
+  @JsonProperty(value = JSON_PROPERTY_PARAMETER, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setParameter(String parameter) {
+  public void setParameter(@javax.annotation.Nullable String parameter) {
     this.parameter = parameter;
   }
 
 
-  public CausingError details(Map<String, Object> details) {
+  public CausingError details(@javax.annotation.Nullable Map<String, Object> details) {
     this.details = details;
     return this;
   }
@@ -147,16 +151,16 @@ public class CausingError {
    * @return details
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DETAILS)
+  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = false)
   @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
   public Map<String, Object> getDetails() {
     return details;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DETAILS)
+  @JsonProperty(value = JSON_PROPERTY_DETAILS, required = false)
   @JsonInclude(content = JsonInclude.Include.ALWAYS, value = JsonInclude.Include.USE_DEFAULTS)
-  public void setDetails(Map<String, Object> details) {
+  public void setDetails(@javax.annotation.Nullable Map<String, Object> details) {
     this.details = details;
   }
 
@@ -201,10 +205,7 @@ public class CausingError {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
   /**
@@ -241,25 +242,25 @@ public class CausingError {
 
     // add `description` to the URL query string
     if (getDescription() != null) {
-      joiner.add(String.format("%sdescription%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getDescription()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%sdescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDescription()))));
     }
 
     // add `errorCode` to the URL query string
     if (getErrorCode() != null) {
-      joiner.add(String.format("%serrorCode%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getErrorCode()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%serrorCode%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getErrorCode()))));
     }
 
     // add `parameter` to the URL query string
     if (getParameter() != null) {
-      joiner.add(String.format("%sparameter%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getParameter()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%sparameter%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getParameter()))));
     }
 
     // add `details` to the URL query string
     if (getDetails() != null) {
       for (String _key : getDetails().keySet()) {
-        joiner.add(String.format("%sdetails%s%s=%s", prefix, suffix,
-            "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, _key, containerSuffix),
-            getDetails().get(_key), URLEncoder.encode(ApiClient.valueToString(getDetails().get(_key)), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+        joiner.add(String.format(java.util.Locale.ROOT, "%sdetails%s%s=%s", prefix, suffix,
+            "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, _key, containerSuffix),
+            getDetails().get(_key), ApiClient.urlEncode(ApiClient.valueToString(getDetails().get(_key)))));
       }
     }
 

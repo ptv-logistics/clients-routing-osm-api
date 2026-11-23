@@ -41,24 +41,28 @@ import com.ptvgroup.developer.client.routing.osm.ApiClient;
   RouteResponse.JSON_PROPERTY_LEGS,
   RouteResponse.JSON_PROPERTY_POLYLINE
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-05-06T09:27:26.048894082Z[Etc/UTC]", comments = "Generator version: 7.8.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-23T08:20:36.211046718Z[Etc/UTC]", comments = "Generator version: 7.22.0")
 public class RouteResponse {
   public static final String JSON_PROPERTY_DISTANCE = "distance";
+  @javax.annotation.Nonnull
   private Integer distance;
 
   public static final String JSON_PROPERTY_TRAVEL_TIME = "travelTime";
+  @javax.annotation.Nonnull
   private Integer travelTime;
 
   public static final String JSON_PROPERTY_LEGS = "legs";
-  private List<Leg> legs = new ArrayList<>();
+  @javax.annotation.Nullable
+  private List<Leg> legs;
 
   public static final String JSON_PROPERTY_POLYLINE = "polyline";
+  @javax.annotation.Nullable
   private String polyline;
 
   public RouteResponse() { 
   }
 
-  public RouteResponse distance(Integer distance) {
+  public RouteResponse distance(@javax.annotation.Nonnull Integer distance) {
     this.distance = distance;
     return this;
   }
@@ -69,21 +73,21 @@ public class RouteResponse {
    * @return distance
    */
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_DISTANCE)
+  @JsonProperty(value = JSON_PROPERTY_DISTANCE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getDistance() {
     return distance;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DISTANCE)
+  @JsonProperty(value = JSON_PROPERTY_DISTANCE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setDistance(Integer distance) {
+  public void setDistance(@javax.annotation.Nonnull Integer distance) {
     this.distance = distance;
   }
 
 
-  public RouteResponse travelTime(Integer travelTime) {
+  public RouteResponse travelTime(@javax.annotation.Nonnull Integer travelTime) {
     this.travelTime = travelTime;
     return this;
   }
@@ -94,21 +98,21 @@ public class RouteResponse {
    * @return travelTime
    */
   @javax.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_TRAVEL_TIME)
+  @JsonProperty(value = JSON_PROPERTY_TRAVEL_TIME, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   public Integer getTravelTime() {
     return travelTime;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_TRAVEL_TIME)
+  @JsonProperty(value = JSON_PROPERTY_TRAVEL_TIME, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
-  public void setTravelTime(Integer travelTime) {
+  public void setTravelTime(@javax.annotation.Nonnull Integer travelTime) {
     this.travelTime = travelTime;
   }
 
 
-  public RouteResponse legs(List<Leg> legs) {
+  public RouteResponse legs(@javax.annotation.Nullable List<Leg> legs) {
     this.legs = legs;
     return this;
   }
@@ -126,21 +130,21 @@ public class RouteResponse {
    * @return legs
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_LEGS)
+  @JsonProperty(value = JSON_PROPERTY_LEGS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<Leg> getLegs() {
     return legs;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_LEGS)
+  @JsonProperty(value = JSON_PROPERTY_LEGS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setLegs(List<Leg> legs) {
+  public void setLegs(@javax.annotation.Nullable List<Leg> legs) {
     this.legs = legs;
   }
 
 
-  public RouteResponse polyline(String polyline) {
+  public RouteResponse polyline(@javax.annotation.Nullable String polyline) {
     this.polyline = polyline;
     return this;
   }
@@ -150,16 +154,16 @@ public class RouteResponse {
    * @return polyline
    */
   @javax.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_POLYLINE)
+  @JsonProperty(value = JSON_PROPERTY_POLYLINE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getPolyline() {
     return polyline;
   }
 
 
-  @JsonProperty(JSON_PROPERTY_POLYLINE)
+  @JsonProperty(value = JSON_PROPERTY_POLYLINE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setPolyline(String polyline) {
+  public void setPolyline(@javax.annotation.Nullable String polyline) {
     this.polyline = polyline;
   }
 
@@ -204,10 +208,7 @@ public class RouteResponse {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
   /**
@@ -244,27 +245,27 @@ public class RouteResponse {
 
     // add `distance` to the URL query string
     if (getDistance() != null) {
-      joiner.add(String.format("%sdistance%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getDistance()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%sdistance%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getDistance()))));
     }
 
     // add `travelTime` to the URL query string
     if (getTravelTime() != null) {
-      joiner.add(String.format("%stravelTime%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getTravelTime()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%stravelTime%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getTravelTime()))));
     }
 
     // add `legs` to the URL query string
     if (getLegs() != null) {
       for (int i = 0; i < getLegs().size(); i++) {
         if (getLegs().get(i) != null) {
-          joiner.add(getLegs().get(i).toUrlQueryString(String.format("%slegs%s%s", prefix, suffix,
-          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+          joiner.add(getLegs().get(i).toUrlQueryString(String.format(java.util.Locale.ROOT, "%slegs%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format(java.util.Locale.ROOT, "%s%d%s", containerPrefix, i, containerSuffix))));
         }
       }
     }
 
     // add `polyline` to the URL query string
     if (getPolyline() != null) {
-      joiner.add(String.format("%spolyline%s=%s", prefix, suffix, URLEncoder.encode(ApiClient.valueToString(getPolyline()), StandardCharsets.UTF_8).replaceAll("\\+", "%20")));
+      joiner.add(String.format(java.util.Locale.ROOT, "%spolyline%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getPolyline()))));
     }
 
     return joiner.toString();
