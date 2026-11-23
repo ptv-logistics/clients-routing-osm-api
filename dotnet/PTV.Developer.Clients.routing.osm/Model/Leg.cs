@@ -42,7 +42,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// <param name="distance">The distance of the leg [m]. (required).</param>
         /// <param name="travelTime">The travel time for the leg [s]. (required).</param>
         /// <param name="polyline">The polyline of the leg in the format specified by **options[polylineFormat]**..</param>
-        public Leg(int? distance = default(int?), int? travelTime = default(int?), string polyline = default(string))
+        public Leg(int? distance = default, int? travelTime = default, string polyline = default)
         {
             // to ensure "distance" is required (not null)
             if (distance == null)
@@ -63,7 +63,9 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// The distance of the leg [m].
         /// </summary>
         /// <value>The distance of the leg [m].</value>
-        /// <example>1422</example>
+        /*
+        <example>1422</example>
+        */
         [DataMember(Name = "distance", IsRequired = true, EmitDefaultValue = true)]
         public int? Distance { get; set; }
 
@@ -71,7 +73,9 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// The travel time for the leg [s].
         /// </summary>
         /// <value>The travel time for the leg [s].</value>
-        /// <example>56</example>
+        /*
+        <example>56</example>
+        */
         [DataMember(Name = "travelTime", IsRequired = true, EmitDefaultValue = true)]
         public int? TravelTime { get; set; }
 

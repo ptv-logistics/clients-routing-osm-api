@@ -43,7 +43,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// <param name="status">status.</param>
         /// <param name="reachableAreas">reachableAreas.</param>
         /// <param name="error">error.</param>
-        public ReachableAreasResponse(CalculationStatus? status = default(CalculationStatus?), ReachableAreas reachableAreas = default(ReachableAreas), ErrorResponse error = default(ErrorResponse))
+        public ReachableAreasResponse(CalculationStatus? status = default, ReachableAreas reachableAreas = default, ErrorResponse error = default)
         {
             this.Status = status;
             this.ReachableAreas = reachableAreas;

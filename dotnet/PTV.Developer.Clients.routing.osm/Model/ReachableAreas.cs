@@ -40,7 +40,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// Initializes a new instance of the <see cref="ReachableAreas" /> class.
         /// </summary>
         /// <param name="polygons">The list of polygons calculated for the specified horizons in GeoJson format. For each horizon there is a separate polygon at the same index. (required).</param>
-        public ReachableAreas(List<string> polygons = default(List<string>))
+        public ReachableAreas(List<string> polygons = default)
         {
             // to ensure "polygons" is required (not null)
             if (polygons == null)

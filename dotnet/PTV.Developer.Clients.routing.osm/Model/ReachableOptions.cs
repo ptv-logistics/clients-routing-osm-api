@@ -41,7 +41,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// Initializes a new instance of the <see cref="ReachableOptions" /> class.
         /// </summary>
         /// <param name="drivingDirection">drivingDirection.</param>
-        public ReachableOptions(DrivingDirection? drivingDirection = default(DrivingDirection?))
+        public ReachableOptions(DrivingDirection? drivingDirection = default)
         {
             this.DrivingDirection = drivingDirection;
         }

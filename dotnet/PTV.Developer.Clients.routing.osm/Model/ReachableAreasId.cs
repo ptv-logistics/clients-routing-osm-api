@@ -40,7 +40,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// Initializes a new instance of the <see cref="ReachableAreasId" /> class.
         /// </summary>
         /// <param name="id">The ID of the calculated reachable areas. (required).</param>
-        public ReachableAreasId(Guid? id = default(Guid?))
+        public ReachableAreasId(Guid? id = default)
         {
             // to ensure "id" is required (not null)
             if (id == null)

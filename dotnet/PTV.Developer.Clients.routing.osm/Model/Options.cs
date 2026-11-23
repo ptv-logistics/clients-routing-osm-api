@@ -41,7 +41,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// Initializes a new instance of the <see cref="Options" /> class.
         /// </summary>
         /// <param name="polylineFormat">polylineFormat.</param>
-        public Options(PolylineFormat? polylineFormat = default(PolylineFormat?))
+        public Options(PolylineFormat? polylineFormat = default)
         {
             this.PolylineFormat = polylineFormat;
         }

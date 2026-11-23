@@ -45,7 +45,7 @@ namespace PTV.Developer.Clients.routing.osm.Model
         /// <param name="errorId">A unique identifier specific to this error instance. It can be used to trace errors by the support..</param>
         /// <param name="causes">A list of affected parameters and/or properties that caused this error..</param>
         /// <param name="details">Additional properties specific to this error class..</param>
-        public ErrorResponse(string description = default(string), string errorCode = default(string), string traceId = default(string), string errorId = default(string), List<CausingError> causes = default(List<CausingError>), Dictionary<string, Object> details = default(Dictionary<string, Object>))
+        public ErrorResponse(string description = default, string errorCode = default, string traceId = default, string errorId = default, List<CausingError> causes = default, Dictionary<string, Object> details = default)
         {
             // to ensure "description" is required (not null)
             if (description == null)
